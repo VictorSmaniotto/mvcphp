@@ -47,36 +47,42 @@
 
 
 
-class TarefaModel {
-    private $tasks; 
+class TarefaModel
+{
+    private $tasks;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->tasks = $this->getTasksFromCookies();
     }
 
-    public function addTask($task) {
+    public function addTask($task)
+    {
         array_push($this->tasks, $task);
         $this->setTasksToCookies($this->tasks);
     }
 
-    public function deleteTask($index) {
+    public function deleteTask($index)
+    {
         unset($this->tasks[$index]);
         $this->setTasksToCookies($this->tasks);
     }
 
-    public function getTasks() {
+    public function getTasks()
+    {
         return $this->getTasksFromCookies();
     }
 
-    private function setTasksToCookies($tasks) {
+    private function setTasksToCookies($tasks)
+    {
         setcookie('tasks', json_encode($tasks), time() + (86400 * 30), '/');
     }
-    
-    private function getTasksFromCookies() {
-        if(isset($_COOKIE['tasks'])) {
+
+    private function getTasksFromCookies()
+    {
+        if (isset($_COOKIE['tasks'])) {
             return json_decode($_COOKIE['tasks'], true);
         }
         return [];
     }
 }
-
